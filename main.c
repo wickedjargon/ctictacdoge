@@ -8,45 +8,55 @@ typedef enum {
 
 void draw_board(Marker board[3][3]) {
     Length window_len = getWindowLen();
-    int length = imin(window_len.x, window_len.y);
-    setTextSize(length/3);
+    int board_length = imin(window_len.x, window_len.y);
+    setTextSize(board_length/3);
     const uint thickness = 8;
-    const Coord top_left = coordOffset(getWindowMid(), iC(-length/2, -length/2));
+    const Coord board_top_left = coordOffset(getWindowMid(), iC(-board_length/2, -board_length/2));
     setColor(WHITE);
     for (uint i = 1; i < 3; i++) {
-        const Coord top = coordShift(top_left, DIR_R, (length/3)*i);
-        const Coord left = coordShift(top_left, DIR_D, (length/3)*i);
-        fillRectCoordLength(top, iC(thickness, length));
-        fillRectCoordLength(left, iC(length, thickness));
+        const Coord top_cord  = coordShift(board_top_left, DIR_R, (board_length/3)*i);
+        const Coord left_cord = coordShift(board_top_left, DIR_D, (board_length/3)*i);
+        const Length vertical_line_length   = iC(thickness, board_length);
+        const Length horizontal_line_length = iC(board_length, thickness);
+        fillRectCoordLength(top_cord, vertical_line_length);
+        fillRectCoordLength(left_cord, horizontal_line_length);
     }
     for (uint x = 0; x < 3; x++) {
         for (uint y = 0; y < 3; y++) {
             if (board[x][y] == M_X) {
                 setTextColor(RED);
-                const Offset off = iC((length/3)*x, (length/3)*y);
-
-                drawTextCoord("X", coordOffset(top_left, off));
-
-            } else if (board[x][y] == M_X) {
+                const Offset off = iC((board_length/3)*x, (board_length/3)*y);
+                drawTextCoord("X", coordOffset(board_top_left, off));
+            } else if (board[x][y] == M_O) {
                 setTextColor(BLUE);
+                const Offset off = iC((board_length/3)*x, (board_length/3)*y);
+                drawTextCoord("O", coordOffset(board_top_left, off));
             }
         }
     }
 }
 
+void place_random_marker(Marker* board[3][3], Marker marker) {
+    
+
+}
+
 int main(void) {
     Marker board [3][3] = {0};
-    board[0][0] = M_X;
-    board[1][1] = M_X;
-    board[2][2] = M_X;
+    /* board[0][0] = M_X; */
+    /* board[1][1] = M_X; */
+    /* board[2][2] = M_X; */
+    /* board[0][1] = M_O; */
+    Marker whose_turn = M_X;
 
     init();
     while (1) {
         const uint T = frameStart();
+        if (keyPressed(SDL_SCANCODE_Q)) {
+            exit(0);
+            }
 
         draw_board(board);
-        setTextSize(16);
-        setTextColor(WHITE);
         frameEnd(T);
     }
     return 0;
