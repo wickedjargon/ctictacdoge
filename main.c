@@ -38,7 +38,6 @@ void draw_board(Marker board[3][3]) {
 
 void place_random_marker(Marker* board[3][3], Marker marker) {
     
-
 }
 
 int main(void) {
