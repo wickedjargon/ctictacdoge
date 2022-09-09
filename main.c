@@ -37,7 +37,14 @@ void draw_board(Marker board[3][3]) {
 }
 
 void place_random_marker(Marker* board[3][3], Marker marker) {
-    
+    int random_x;
+    int random_y;
+
+    do {
+        random_x = rand() % 3;
+        random_y = random() % 3;
+    } while (*board[random_x][random_y] != M_EMPTY);
+    *board[random_x][random_y] = marker;
 }
 
 int main(void) {
@@ -60,4 +67,3 @@ int main(void) {
     }
     return 0;
 }
-
