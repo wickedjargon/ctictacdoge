@@ -36,15 +36,15 @@ void draw_board(Marker board[3][3]) {
     }
 }
 
-void place_random_marker(Marker* board[3][3], Marker marker) {
+void place_random_marker(Marker board[3][3], Marker marker) {
     int random_x;
     int random_y;
 
     do {
         random_x = rand() % 3;
-        random_y = random() % 3;
-    } while (*board[random_x][random_y] != M_EMPTY);
-    *board[random_x][random_y] = marker;
+        random_y = rand() % 3;
+    } while (board[random_x][random_y] != M_EMPTY);
+    board[random_x][random_y] = marker;
 }
 
 int main(void) {
@@ -54,11 +54,14 @@ int main(void) {
     /* board[2][2] = M_X; */
     /* board[0][1] = M_O; */
     Marker whose_turn = M_X;
-
     init();
+
+    place_random_marker(board, M_X);
+    place_random_marker(board, M_O);
+    place_random_marker(board, M_X);
     while (1) {
         const uint T = frameStart();
-        if (keyPressed(SDL_SCANCODE_Q)) {
+        if (keyPressed(SDL_SCANCODE_Q) || keyPressed(SDL_SCANCODE_ESCAPE)) {
             exit(0);
             }
 
