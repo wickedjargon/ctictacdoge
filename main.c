@@ -118,23 +118,27 @@ bool player_won(Marker board[3][3], Marker player) {
 
 int main(void) {
     Marker board [3][3] = {0};
-    board[0][0] = M_X;
-    board[1][1] = M_X;
-    board[2][2] = M_X;
-    board[0][1] = M_O;
-    /* Marker whose_turn = M_X; */
+    board[0][0] = M_O;
+    board[1][1] = M_O;
+    board[2][2] = M_O;
+    board[0][1] = M_X;
+    // Marker whose_turn = M_X;
     init();
-    while (true) {
+
+    while (1) {
         const uint T = frameStart();
-        if (keyPressed(SDL_SCANCODE_Q) || keyPressed(SDL_SCANCODE_ESCAPE)) {
+
+        if (keyPressed(SDL_SCANCODE_Q) || keyPressed(SDL_SCANCODE_ESCAPE))
             exit(0);
-        }
-        x = player_won(board, M_X) || player_won(board, M_O)
-        if (player_won(board, M_X)){
-            printf(")
+
+        Marker won = M_EMPTY;
+        if((won = player_won(board, M_X) ? M_X : (player_won(board, M_O) ? M_O : M_EMPTY)) != M_EMPTY){
+            printf("%s won!\n", won == M_X ? "X" : "O");
+            return 0;
         }
 
         draw_board(board);
+
         frameEnd(T);
     }
     return 0;
