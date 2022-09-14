@@ -61,11 +61,11 @@ bool is_full(Marker board[3][3]) {
     return true;
 }
 
-bool horzont_won(Makrer board[3][3], Marker player) {
-    for (y = 0; y < 3; y++) {
+bool horzont_won(Marker board[3][3], Marker player) {
+    for (uint y = 0; y < 3; y++) {
         bool won = true;
 
-        for (x = 0; x < 3; x++)
+        for (uint x = 0; x < 3; x++)
             if (board[x][y] != player)
                 won = false;
 
@@ -75,15 +75,34 @@ bool horzont_won(Makrer board[3][3], Marker player) {
     return false;
 }
 
-bool player_win(Marker board[3][3], Marker player) {
-    if (vert_win(board, player)) {
-        return true;
-    } else if (horizont_won(board, player)) {
-        return true;
-    } else if (diag_won(board, player)) {
-        return true;
-    }
+bool vert_won(Marker board[3][3], Marker player) {
+    for (uint x = 0; x < 3; x++) {
+        bool won = true;
 
+        for (uint y = 0; y < 3; y++)
+            if (board[x][y] != player)
+                won = false;
+
+        if(won)
+            return true;
+    }
+    return false;
+}
+
+
+
+
+bool player_win(Marker board[3][3], Marker player) {
+    if (vert_won(board, player))
+        return true;
+
+    if (horzont_won(board, player))
+        return true;
+
+    if (diag_won(board, player))
+        return true;
+
+    return false;
 }
 
 int main(void) {
