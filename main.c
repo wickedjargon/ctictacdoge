@@ -63,11 +63,16 @@ bool is_full(Marker board[3][3]) {
 
 bool horzont_won(Makrer board[3][3], Marker player) {
     for (y = 0; y < 3; y++) {
-        for (x = 0; x < 3; x++) {
-            if (board[x][y] == player && board[x][y] == player
-        }
-    }
+        bool won = true;
 
+        for (x = 0; x < 3; x++)
+            if (board[x][y] != player)
+                won = false;
+
+        if(won)
+            return true;
+    }
+    return false;
 }
 
 bool player_win(Marker board[3][3], Marker player) {
