@@ -1,3 +1,7 @@
+// TODO: get player input
+// TODO: implement turns
+// TODO: a menu and game over screen
+
 #include "DogeLib/Includes.h"
 
 typedef enum {
@@ -125,7 +129,7 @@ int main(void) {
     // Marker whose_turn = M_X;
     init();
 
-    while (1) {
+    while (true) {
         const uint T = frameStart();
 
         if (keyPressed(SDL_SCANCODE_Q) || keyPressed(SDL_SCANCODE_ESCAPE))
@@ -134,6 +138,9 @@ int main(void) {
         Marker won = M_EMPTY;
         if((won = player_won(board, M_X) ? M_X : (player_won(board, M_O) ? M_O : M_EMPTY)) != M_EMPTY){
             printf("%s won!\n", won == M_X ? "X" : "O");
+            return 0;
+        } else if (is_full(board)) {
+            printf("it's a tie game\n");
             return 0;
         }
 
