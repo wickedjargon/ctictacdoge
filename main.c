@@ -61,6 +61,7 @@ bool is_full(Marker board[3][3]) {
     return true;
 }
 
+
 bool horzont_won(Marker board[3][3], Marker player) {
     for (uint y = 0; y < 3; y++) {
         bool won = true;
@@ -89,10 +90,20 @@ bool vert_won(Marker board[3][3], Marker player) {
     return false;
 }
 
+bool diag_won(Marker board[3][3], Marker player) {
+    bool won1 = true;
+    bool won2 = true;
+    for (uint i = 0; i < 3; i++) {
+        if (board[i][i] != player)
+            won1 = false;
+        if (board[i][2-i] != player)
+            won2 = false;
 
+    }
+    return won1 || won2;
+}
 
-
-bool player_win(Marker board[3][3], Marker player) {
+bool player_won(Marker board[3][3], Marker player) {
     if (vert_won(board, player))
         return true;
 
@@ -107,23 +118,24 @@ bool player_win(Marker board[3][3], Marker player) {
 
 int main(void) {
     Marker board [3][3] = {0};
-    /* board[0][0] = M_X; */
-    /* board[1][1] = M_X; */
-    /* board[2][2] = M_X; */
-    /* board[0][1] = M_O; */
-    Marker whose_turn = M_X;
+    board[0][0] = M_X;
+    board[1][1] = M_X;
+    board[2][2] = M_X;
+    board[0][1] = M_O;
+    /* Marker whose_turn = M_X; */
     init();
-    place_random_marker(board, M_X);
-    place_random_marker(board, M_O);
-    place_random_marker(board, M_X);
-    while (1) {
+    while (true) {
         const uint T = frameStart();
         if (keyPressed(SDL_SCANCODE_Q) || keyPressed(SDL_SCANCODE_ESCAPE)) {
             exit(0);
         }
+        x = player_won(board, M_X) || player_won(board, M_O)
+        if (player_won(board, M_X)){
+            printf(")
+        }
 
         draw_board(board);
-        frameEnd(T)
+        frameEnd(T);
     }
     return 0;
 }
